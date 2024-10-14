@@ -4,25 +4,29 @@ import HTMLFlipBook from "react-pageflip";
 interface PageProps {
     number: number;
     content: string;
+    image: string;
+    title: string;
 }
 
 interface Page {
     title: string;
     content: string;
+    image: string;
 }
 
 interface Story {
     title: string;
+    image: string;
     pages: Page[];
 }
 
-const Page = forwardRef<HTMLDivElement, PageProps>(({content,number}, ref: Ref<HTMLDivElement>) => {
+const Page = forwardRef<HTMLDivElement, PageProps>(({content,number,image,title}, ref: Ref<HTMLDivElement>) => {
     return (
         <div className="page p-5 bg-[hsl(35,55%,98%)] text-[hsl(35,35%,35%)] border border-[hsl(35,20%,70%)] overflow-hidden" ref={ref} data-density="hard">
             <div className="page-content flex flex-col justify-between items-stretch w-full h-full">
-                {/* <h2 className="page-header text-center uppercase h-[30px] text-base">Page header - {number}</h2> */}
-                <div className="page-image bg-center bg-no-repeat bg-contain h-full" style={{ backgroundImage: `url(https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-sunset-surrounded-by-grass_181624-22807.jpg)` }}></div>
-                <div className="page-text flex-grow h-full text-justify text-sm mt-2 pt-2 box-border border-t border-[hsl(35,55%,90%)]">{content}</div>
+                {/* <h2 className="page-header text-center uppercase h-[30px] text-base">{title}</h2> */}
+                <div className="page-image bg-center bg-no-repeat bg-contain h-full" style={{ backgroundImage: `url(${image})` }}></div>
+                <div className="page-text flex-grow h-full text-justify text-medium mt-2 pt-2 box-border border-t border-[hsl(35,55%,90%)]">{content}</div>
                 <div className="page-footer h-[30px] border-t border-[hsl(35,55%,90%)] text-[hsl(35,20%,50%)] text-sm">{number}</div>
             </div>
         </div>
@@ -46,24 +50,24 @@ function StoryBook({story}: {story: Story}) {
             maxWidth={1000}
             minHeight={500}
             maxHeight={1533}
-            drawShadow={true}
+            drawShadow={false}
             flippingTime={1000}
             usePortrait={true}
             startPage={0}
             useMouseEvents={true}
             showCover={true}
-            mobileScrollSupport={true}
+            mobileScrollSupport={false}
             className="demo-book shadow-lg hidden bg-cover"
             style={{ background: "#fff" }}
         >
             <div className="bg-[hsl(35,45%,80%)] text-[hsl(35,35%,35%)] border border-[hsl(35,20%,50%)]" data-density="hard">
-                <div className="page-content text-center">
-                    <h2 className="pt-[50%] text-[210%]">{story.title}</h2>
+                <div style={{height: "inherit"}} className="page-content overflow-hidden">
+                    <img src={story?.image} alt={story?.title} className="w-full object-contain" />
                 </div>
             </div>
             {
-                story.pages.map((page, index) => (
-                    <Page number={index + 1} key={index} content={page.content} />
+                story.pages.length > 0 && story.pages.map((page, index) => (
+                    <Page number={index + 1} key={index} content={page.content} image={page.image} title={page.title} />
                 ))
             }
             <div className="page page-cover page-cover-bottom bg-[hsl(35,45%,80%)] text-[hsl(35,35%,35%)] border border-[hsl(35,20%,50%)]" data-density="hard">
