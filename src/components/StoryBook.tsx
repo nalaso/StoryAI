@@ -33,6 +33,8 @@ const Page = forwardRef<HTMLDivElement, PageProps>(({content,number,image,title}
     );
 });
 
+Page.displayName = "Page"
+
 function StoryBook({story}: {story: Story}) {
     return (
         <HTMLFlipBook
