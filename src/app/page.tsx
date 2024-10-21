@@ -66,23 +66,22 @@ export default function Home() {
 
 			const data = await response.json();
 
-			let promises = [];
-
-			toast.info('Story images are being generated...');
-
-			for (let i = 0; i < data.pages.length; i++) {
-				promises.push(fetchImage(data.title + ". " + data.pages[i].summary, 720, 480));
-			}
-
-			toast.success('Story images generated successfully!');
-
 			toast.info('Cover image is being generated...');
 
 			const CoverImage = await fetchImage("Create a beautiful cover image with title for a story called " + data.title, 720, 1200);
 
 			toast.success('Cover image generated successfully!');
 
+			let promises = [];
+
+			for (let i = 0; i < data.pages.length; i++) {
+				promises.push(fetchImage(data.title + ". " + data.pages[i].summary, 720, 480));
+			}
+
+			toast.info('Story images are being generated...');
+
 			Promise.all(promises).then(async (responses) => {
+				toast.success('Story images generated successfully!');
 				toast.info('Storing generated story...');
 				
 				const FinalPages: Page[] = []
