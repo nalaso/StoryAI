@@ -41,6 +41,7 @@ export default function Home() {
 		e.preventDefault();
 		if(!text.trim() || !age || !pages) return;
 		try {
+			toast.warning('Story generation may take up to 1 minute.');
 			setLoading(true);
 			toast.info('Creating story...');
 			const response = await fetch('/api/generate-story', {

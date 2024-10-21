@@ -1,6 +1,5 @@
-import { generateObject, generateText } from 'ai';
-import { createOpenAI } from '@ai-sdk/openai';
 import Together from "together-ai";
+import { utapi } from '@/lib/uploadthing';
 
 export const maxDuration = 60;
 export const dynamic = 'force-dynamic';
@@ -52,7 +51,34 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify({ error: e.toString() }));
   }
 
-  return new Response(JSON.stringify(response.data[0]), {
+  let uploadedURL;
+
+  try {
+    // @ts-ignore
+    const imgFile = await fetch(response.data[0].url);
+    const blob = await imgFile.blob();
+    const file = new File([blob], prompt.replaceAll(" ", "-") + "-"+ Date.now() + ".png", { 
+      type: "image/png",
+    });
+    // TODO move to cron tab to reduce latency
+    const uploadedFile = await utapi.uploadFiles([file]);
+    uploadedURL = {
+      // @ts-ignore
+      url: uploadedFile[0]?.data.url
+    };
+    console.log("uploadedFiles", uploadedFile);
+  } catch (e: any) {
+    console.log("error", e);
+    return new Response(JSON.stringify(response.data[0]), {
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+  }
+
+  const imgUrl = uploadedURL || response.data[0];
+
+  return new Response(JSON.stringify(imgUrl), {
     headers: {
       'content-type': 'application/json',
     },

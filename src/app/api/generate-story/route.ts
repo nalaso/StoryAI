@@ -47,9 +47,9 @@ export async function POST(req: Request) {
   const identifier = getIp();
   const { success, remaining } = await ratelimit.limit(identifier);
   
-  if (!success) {
-    return new Response("You have reached the maximum number of requests per day. Please try again after 24 hours.", { status: 429 });
-  }
+  // if (!success) {
+  //   return new Response("You have reached the maximum number of requests per day. Please try again after 24 hours.", { status: 429 });
+  // }
 
   const provider = createOpenAI({
     apiKey: process.env.OPENAI_API_KEY,

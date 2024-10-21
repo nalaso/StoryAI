@@ -28,6 +28,7 @@
     "react-pageflip": "^2.0.3",
     "sonner": "^1.5.0",
     "together-ai": "^0.6.0-alpha.4",
+    "uploadthing": "^7.1.0",
     "zod": "^3.23.8",
     "zustand": "^5.0.0-rc.2"
   },
