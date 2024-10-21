@@ -17,7 +17,7 @@ const Header = () => {
 					<Button onClick={() => router.push("/explore")} variant={"flat"} className="text-xl font-bold">Explore</Button>
 				</div>
 				<div className="flex space-x-2 items-center">
-					<Button onClick={()=>router.push("https://github.com/nalaso/storyai")}className="text-xl font-bold" variant="flat">Github</Button>
+					<Button onClick={()=>router.push("https://git.new/taleai-web")}className="text-xl font-bold" variant="flat">Github</Button>
 				</div>
 			</div>
 		</>
