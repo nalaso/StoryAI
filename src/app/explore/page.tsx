@@ -29,7 +29,7 @@ const Page = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [maxReached, setMaxReached] = useState(false)
     const [ageGroup, setAge] = useState<string>("all");
-    const limit = 9;
+    const limit = 15;
     const router = useRouter();
 
     useEffect(() => {
@@ -141,7 +141,7 @@ const Page = () => {
                                     </Card>
                                 ))}
                                 {
-                                    isLoading && [1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+                                    isLoading && Array.from({ length: limit }).map((_, i) => (
                                         <Card key={i} className="bg-white rounded-xl shadow-md overflow-hidden animate-pulse">
                                             <div className="relative">
                                                 <div className="w-full h-48 bg-gray-200" />
