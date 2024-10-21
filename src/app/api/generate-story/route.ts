@@ -72,8 +72,6 @@ export async function POST(req: Request) {
 
   const { story } = result.object;
 
-  console.log("Generated story:", story);
-
   return new Response(JSON.stringify(story), {
     headers: {
       'content-type': 'application/json',
