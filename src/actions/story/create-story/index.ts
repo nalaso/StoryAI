@@ -1,6 +1,7 @@
 'use server'
 
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export const createStory = async ({
     prompt,
@@ -19,7 +20,7 @@ export const createStory = async ({
     pages: any[],
     ageGroup: string
 }) => {
-    const data = await prisma.$transaction(async (tx) => {
+    const data = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
         const story = await tx.story.create({
             data: {
                 prompt,
