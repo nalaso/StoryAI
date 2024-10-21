@@ -2,6 +2,9 @@ import { generateObject, generateText } from 'ai';
 import { createOpenAI } from '@ai-sdk/openai';
 import Together from "together-ai";
 
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
+
 const systemPrompt = (ageGroup: string) => {
   switch(ageGroup) {
     case "0-3": 

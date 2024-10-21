@@ -3,6 +3,9 @@ import { createOpenAI } from '@ai-sdk/openai';
 import { z } from 'zod';
 import { categories } from '@/lib/constant';
 
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
+
 const systemPrompt = (age: string) => {
   return `You are an AI storyteller. Your task is to create engaging, creative, and coherent stories based on the prompts provided. Follow these guidelines:
 
