@@ -2,10 +2,23 @@ import { generateObject, generateText } from 'ai';
 import { createOpenAI } from '@ai-sdk/openai';
 import Together from "together-ai";
 
-export const maxDuration = 30;
-
 const systemPrompt = (ageGroup: string) => {
-  return "Generate a beautiful storybook image for "
+  switch(ageGroup) {
+    case "0-3": 
+      return "Generate a cute, bright, and whimsical storybook illustration for a 0-3 year old, with simple shapes and vibrant colors.";
+    case "4-7": 
+      return "Generate a charming storybook illustration for a 4-7 year old, with a mix of cute characters and a bit more detail.";
+    case "8-12": 
+      return "Generate a detailed and colorful storybook illustration for an 8-12 year old, with realistic elements and dynamic scenes.";
+    case "13-18": 
+      return "Generate a realistic and visually engaging storybook image for a 13-18 year old, with a focus on rich detail and mature themes.";
+    case "18-30": 
+      return "Generate a realistic and sophisticated storybook illustration for an 18-30 year old, with detailed backgrounds and lifelike characters.";
+    case "30+": 
+      return "Generate a realistic and mature storybook illustration for a 30+ year old, with intricate details and a refined style.";
+    default: 
+      return "Generate a beautiful storybook image with an appropriate level of realism and style based on the age.";
+  }
 }
 
 export async function POST(req: Request) {
