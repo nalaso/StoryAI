@@ -4,7 +4,6 @@ export const timeAgo = (date: Date): string => {
     const diffInSec = Math.floor(diffInMs / 1000);
     const diffInMin = Math.floor(diffInSec / 60);
     const diffInHr = Math.floor(diffInMin / 60);
-    const diffInDays = Math.floor(diffInHr / 24);
 
     if (diffInSec < 60) {
         return `${diffInSec} sec ago`;

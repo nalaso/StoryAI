@@ -1,10 +1,9 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { usePromptStore } from '@/hooks/usePromptStore';
 import { useRouter } from 'next/navigation';
-import { Textarea, Button, Card, Select, SelectItem, Spinner } from '@nextui-org/react';
+import { Textarea, Button, Card, Select, SelectItem, Spinner, Chip } from '@nextui-org/react';
 import Header from '@/components/header';
-import { useSession } from 'next-auth/react';
 import { ages, pagesItem } from '@/lib/constant';
 import { createStory } from '@/actions/story/create-story';
 import { toast } from 'sonner';
@@ -44,7 +43,6 @@ export default function Home() {
 		try {
 			setLoading(true);
 			toast.info('Creating story...');
-			toast.info('Story content is being generated...');
 			const response = await fetch('/api/generate-story', {
 				method: 'POST',
 				headers: {
@@ -57,6 +55,10 @@ export default function Home() {
 				}),
 			});
 
+			if (response.status === 429) {
+				toast.error('You have reached the maximum number of requests per day. Please try again after 24 hours.');
+				throw new Error('Failed to fetch story');
+			}
 			
 			if (!response.ok) {
 				throw new Error('Failed to fetch story');
@@ -65,17 +67,20 @@ export default function Home() {
 			toast.success('Story content generated successfully!');
 
 			const data = await response.json();
+			const remaining = data.remaining;
+			toast.warning(`You have ${remaining} requests remaining.`);
+			const story = data.story;
 
 			toast.info('Cover image is being generated...');
 
-			const CoverImage = await fetchImage("Create a beautiful cover image with title for a story called " + data.title, 720, 1200);
+			const CoverImage = await fetchImage("Create a beautiful cover image with title for a story called " + story.title, 720, 1200);
 
 			toast.success('Cover image generated successfully!');
 
 			let promises = [];
 
-			for (let i = 0; i < data.pages.length; i++) {
-				promises.push(fetchImage(data.title + ". " + data.pages[i].summary, 720, 480));
+			for (let i = 0; i < story.pages.length; i++) {
+				promises.push(fetchImage(story.title + ". " + story.pages[i].summary, 720, 480));
 			}
 
 			toast.info('Story images are being generated...');
@@ -85,8 +90,8 @@ export default function Home() {
 				toast.info('Storing generated story...');
 				
 				const FinalPages: Page[] = []
-				for (let i = 0; i < data.pages.length; i++) {
-					const page = data.pages[i];
+				for (let i = 0; i < story.pages.length; i++) {
+					const page = story.pages[i];
 					const image = responses[i];
 					FinalPages.push({
 						pageOrder: i+1,
@@ -95,18 +100,18 @@ export default function Home() {
 						content: page.content,
 					});
 				}
-				const story = await createStory({
+				const generatedStory = await createStory({
 					prompt: text,
 					image: CoverImage,
-					title: data.title,
+					title: story.title,
 					pagesCount: parseInt(pages),
-					categories: data.categories,
+					categories: story.categories,
 					pages: FinalPages,
 					ageGroup: age
 				});
 				setLoading(false);
 				toast.success('Story created successfully!');
-				router.push(`/story/${story.id}`);
+				router.push(`/story/${generatedStory.id}`);
 			});
 		} catch (error) {
 			toast.error('Error creating story, please try again later.');
@@ -175,6 +180,11 @@ export default function Home() {
 						>
 							{loading ? <Spinner color="white" /> : "Generate Story"}
 						</Button>
+						<div className='flex justify-center'>
+							<Chip variant='flat' color="warning">
+								You can generate up to 5 stories per day.
+							</Chip>
+						</div>
 					</form>
 				</Card>
 			</div>

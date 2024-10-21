@@ -2,28 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
-import { headers } from "next/headers";
+import { getIp } from "@/lib/ip";
 
 const redis = Redis.fromEnv();
 
 const inputSchema = z.object({
   storyId: z.string().min(1, "storyId is required"),
 });
-
-const getIp = () => {
-  const forwardedFor = headers().get('x-forwarded-for');
-  const realIp = headers().get('x-real-ip');
-
-  if (forwardedFor) {
-    return forwardedFor.split(',')[0].trim();
-  }
-
-  if (realIp) {
-    return realIp.trim();
-  }
-
-  return'0.0.0.0';
-}
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {

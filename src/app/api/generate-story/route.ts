@@ -2,6 +2,8 @@ import { generateObject } from 'ai';
 import { createOpenAI } from '@ai-sdk/openai';
 import { z } from 'zod';
 import { categories } from '@/lib/constant';
+import { getIp } from '@/lib/ip';
+import { ratelimit } from '@/lib/ratelimit';
 
 export const maxDuration = 60;
 export const dynamic = 'force-dynamic';
@@ -42,6 +44,13 @@ const getUserPrompt = (prompt: string, pages: number, wordsPerPage: number) => {
 export async function POST(req: Request) {
   const { prompt, age, pages }: { prompt: string, age: string, pages: number } = await req.json();
 
+  const identifier = getIp();
+  const { success, remaining } = await ratelimit.limit(identifier);
+  
+  if (!success) {
+    return new Response("You have reached the maximum number of requests per day. Please try again after 24 hours.", { status: 429 });
+  }
+
   const provider = createOpenAI({
     apiKey: process.env.OPENAI_API_KEY,
     baseURL: process.env.OPENAI_API_URL,
@@ -75,7 +84,10 @@ export async function POST(req: Request) {
 
   const { story } = result.object;
 
-  return new Response(JSON.stringify(story), {
+  return new Response(JSON.stringify({
+    story,
+    remaining,
+  }), {
     headers: {
       'content-type': 'application/json',
     },
