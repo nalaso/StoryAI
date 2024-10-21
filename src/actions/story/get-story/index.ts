@@ -65,7 +65,7 @@ export const getStories = async (mode: string, start: number, limit: number, tim
         orderBy,
     });
 
-    return stories.map((story) => ({
+    return stories.map((story:any) => ({
         id: story.id,
         title: story.title,
         image: story.image,
