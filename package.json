@@ -23,6 +23,7 @@
     "next": "14.2.15",
     "next-auth": "beta",
     "openai": "^4.67.3",
+    "pdf-lib": "^1.17.1",
     "react": "^18",
     "react-dom": "^18",
     "react-pageflip": "^2.0.3",

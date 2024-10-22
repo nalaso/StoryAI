@@ -5,6 +5,7 @@ import { Button, Card, Spinner } from '@nextui-org/react';
 import StoryBook from '@/components/StoryBook';
 import { useParams } from 'next/navigation';
 import { getStory } from '@/actions/story/get-story';
+import { generatePDF } from '@/utils/pdf';
 
 interface Page {
 	title: string;
@@ -60,13 +61,24 @@ const StoryPage: React.FC = () => {
 		incView()
 	}, [])
 
+	const handleDownloadPDF = async () => {
+		await generatePDF(story);
+	};
+
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-center p-4">
 			{loading && <Card className="w-full max-w-3xl p-6 space-y-6">
 				<h1 className="text-3xl font-bold text-center">{text}</h1>
 				 <Spinner color="primary" />
 			</Card>}
-			{!loading && <StoryBook story={story} />}
+			{!loading && (
+				<>
+					<StoryBook story={story} />
+					<Button onClick={handleDownloadPDF} className="mt-4">
+						Download as PDF
+					</Button>
+				</>
+			)}
 		</div>
 	);
 };
