@@ -1,3 +1,8 @@
+# Tale AI 
+
+https://github.com/user-attachments/assets/5f06c20d-b2f2-41ad-9460-97df2d6446d2
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
