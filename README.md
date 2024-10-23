@@ -1,41 +1,39 @@
 # Tale AI 
 
+(taleai.vercel.app)[https://taleai.vercel.app]
+
 https://github.com/user-attachments/assets/5f06c20d-b2f2-41ad-9460-97df2d6446d2
 
+## TODO
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+- [ ] **Story Generation**
+  - [x] Improve story generation algorithm for better context understanding.
+  - [x] Add support for story categories (e.g., **animals**, **adventures**).
+  - [ ] **Add language support**
+  - [ ] Optimize AI model for faster story generation.
+  - [ ] Allow users to specify story settings (e.g., **tone**, **genre**, **length**).
 
-## Getting Started
+- [ ] **User Interface**
+  - [ ] **Different UI for different age group.**
+  - [ ] Enhance the user interface with a more intuitive design.
+  - [ ] Add a story preview panel with real-time updates while generation.
+  - [ ] Implement dark mode for better user experience.
 
-First, run the development server:
+- [ ] **User Features**
+  - [ ] **Add the option to download generated stories as PDF.**
+  - [ ] **Implement text-to-speech functionality to read generated stories aloud.**
+  - [ ] Enable sharing of generated stories.
+  - [ ] Implement paid longer page generation.
+  - [ ] Implement optional user login.
+  - [ ] Allow users to provide feedback to improve story generation.
+  - [ ] Allow user to modify the generated story.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [ ] **Backend**
+  - [x] Integrate database for storing user profiles and saved stories.
+  - [ ] Implement caching to reduce response time for story generation.
+  - [ ] Improve scalability to handle high traffic and requests.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [x] **Image Generation**
+  - [x] Integrate stable image generation for story covers and illustrations.
+  - [x] Add functionality to save generated images with stories.
+  - [x] Fix image link expiration issue.
