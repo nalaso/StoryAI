@@ -1,6 +1,6 @@
 # Tale AI 
 
-(taleai.vercel.app)[https://taleai.vercel.app]
+[taleai.vercel.app](https://taleai.vercel.app)
 
 https://github.com/user-attachments/assets/5f06c20d-b2f2-41ad-9460-97df2d6446d2
 
